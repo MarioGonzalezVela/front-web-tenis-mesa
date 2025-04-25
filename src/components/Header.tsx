@@ -15,7 +15,7 @@ export default function Header() {
 
         <nav className="hidden md:flex gap-6 text-gray-800 font-medium">
           <Link href="/">Inicio</Link>
-          {/* Si el usuario está no logueado */}
+          {/* Si el usuario no está logueado */}
           {!isAuthenticated ? (
             <>
               <Link href="/login">Login</Link>
