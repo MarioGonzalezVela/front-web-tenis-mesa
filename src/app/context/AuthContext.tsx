@@ -1,45 +1,48 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useState, useEffect, useContext, ReactNode } from 'react'
 
 interface AuthContextType {
+  token: string | null
   isAuthenticated: boolean
   login: (token: string) => void
   logout: () => void
 }
 
-const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false,
-  login: () => {},
-  logout: () => {},
-})
+const AuthContext = createContext<AuthContextType | null>(null)
 
-export const useAuth = () => useContext(AuthContext)
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(null)
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const router = useRouter()
-
+  // Cargar el token desde localStorage al iniciar
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    setIsAuthenticated(!!token)
+    const storedToken = localStorage.getItem('token')
+    setToken(storedToken)
   }, [])
 
-  const login = (token: string) => {
-    localStorage.setItem('token', token)
-    setIsAuthenticated(true)
+  // Función para iniciar sesión y guardar el token
+  const login = (newToken: string) => {
+    localStorage.setItem('token', newToken)
+    setToken(newToken)
   }
 
+  // Función para cerrar sesión y eliminar el token
   const logout = () => {
     localStorage.removeItem('token')
-    setIsAuthenticated(false)
-    router.push('/') // Redirigir a la página de inicio
+    setToken(null)
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ token, isAuthenticated: !!token, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth debe usarse dentro de un AuthProvider')
+  }
+  return context
 }
