@@ -18,8 +18,6 @@ export default function RegisterPage() {
     e.preventDefault();
     setMessage('');
 
-    // Conexión con la API 
-
     try {
       const response = await fetch('http://localhost:8000/api/register', {
         method: 'POST',
@@ -44,9 +42,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="w-full max-w-md p-6 bg-gray-50 border rounded-lg shadow">
-        <h1 className="text-3xl font-bold mb-7 text-center">¡Regístrate!</h1>
+    <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 rounded-lg">
+      <div className="w-full max-w-md p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl">
+        <h1 className="text-3xl font-bold mb-7 text-center text-gray-200">¡Regístrate!</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -54,7 +52,7 @@ export default function RegisterPage() {
             placeholder="Nombre"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border rounded-lg bg-white hover:border-cyan-800 shadow-md"
+            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <input
             type="email"
@@ -62,7 +60,7 @@ export default function RegisterPage() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border rounded-lg bg-white hover:border-cyan-800 shadow-md"
+            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <input
             type="password"
@@ -70,17 +68,17 @@ export default function RegisterPage() {
             placeholder="Contraseña"
             value={form.password}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border rounded-lg bg-white hover:border-cyan-800 shadow-md"
+            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <button
             type="submit"
-            className="w-full bg-cyan-800 text-white py-2 rounded-lg hover:bg-cyan-900"
+            className="w-full bg-gray-800 text-white py-2 rounded-xl hover:bg-gray-700 transition"
           >
             Registrarse
           </button>
         </form>
         {message && (
-          <p className="mt-4 text-center text-red-600">{message}</p>
+          <p className="mt-4 text-center text-red-500">{message}</p>
         )}
       </div>
     </div>

@@ -16,14 +16,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col bg-black bg-opacity-90 text-gray-200 transition-opacity duration-500 backdrop-blur-md">
         <AuthProvider>
           <Header />
-          <main className="flex-grow p-4">{children}</main>
+          <main className="flex-grow p-6 bg-gray-900 rounded-sm shadow-xl">
+            {children}
+          </main>
           <Footer />
         </AuthProvider>
       </body>
     </html>
   )
 }
-

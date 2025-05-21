@@ -18,18 +18,16 @@ export default function StorePage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Obtener productos (PÚBLICO)
     fetch('http://localhost:8000/api/products')
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Error obteniendo productos:', error))
 
-    // Obtener carrito sin autenticación (PÚBLICO)
     fetch('http://localhost:8000/api/carts')
       .then(res => res.json())
       .then(data => {
         if (data.length > 0) {
-          setCartId(data[0].id) // Toma el primer carrito disponible
+          setCartId(data[0].id)
         } else {
           alert('No hay carritos disponibles')
         }
@@ -45,9 +43,7 @@ export default function StorePage() {
 
     fetch(`http://localhost:8000/api/carts/${cartId}/add`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id: productId, quantity: 1 }),
     })
       .then(res => res.json())
@@ -56,23 +52,12 @@ export default function StorePage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={() => router.push('/cart')}
-          className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Ir al carrito
-        </button>
-      </div>
-
-      <h1 className="text-3xl font-bold mb-6 text-center">Tienda</h1>
-
-      <div className="mb-6 text-center">
+    <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
+      <div className="flex justify-between items-center mb-6">
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border p-2 rounded-md"
+          className="border p-2 rounded-xl bg-gray-800 text-gray-300 hover:bg-gray-700 transition"
         >
           <option value="">Todo</option>
           <option value="ropa">Ropa</option>
@@ -81,19 +66,26 @@ export default function StorePage() {
           <option value="gomas">Gomas</option>
           <option value="extras">Extras</option>
         </select>
+
+        <button
+          onClick={() => router.push('/cart')}
+          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
+        >
+          🛒 Ir al carrito
+        </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map(product => (
-          <div key={product.id} className="border rounded-lg p-4 shadow hover:shadow-md flex flex-col items-center bg-white transition duration-200">
-            <img src={product.image} alt={product.name} className="w-full h-40 object-cover mb-4" />
-            <h2 className="text-xl font-semibold">{product.name}</h2>
-            <p className="text-gray-700">Precio: {product.price}€</p>
+          <div key={product.id} className="border border-gray-700 rounded-2xl p-4 shadow-lg hover:shadow-xl bg-gray-900 transition duration-200">
+            <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-xl mb-4" />
+            <h2 className="text-xl font-semibold text-gray-200">{product.name}</h2>
+            <p className="text-gray-400">Precio: {product.price}€</p>
             <button
-              className="mt-2 bg-blue-600 text-white py-1 px-4 rounded hover:bg-blue-700"
+              className="mt-3 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-2xl transition"
               onClick={() => addToCart(product.id)}
             >
-              Añadir al carrito
+              ➕ Añadir al carrito
             </button>
           </div>
         ))}
