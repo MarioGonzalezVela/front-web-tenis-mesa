@@ -46,10 +46,10 @@ export default function FavoriteVideosPage() {
 
   return (
     <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
-      <h1 className="text-3xl font-bold text-center text-gray-200 mb-6">Tus Videos Favoritos ⭐</h1>
+      <h1 className="text-3xl font-bold text-center text-gray-200 mb-6">Tus Vídeos Favoritos ⭐</h1>
 
       {favorites.length === 0 ? (
-        <p className="text-center text-gray-400">No tienes vídeos favoritos aún.</p>
+        <p className="text-center text-gray-400">No tienes ningún vídeo guardado como favoritos</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {favorites.map(fav => (
