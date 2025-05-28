@@ -1,59 +1,48 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useAuth } from '@/app/context/AuthContext'
+import { usePathname, useRouter } from 'next/navigation'; 
+import { useAuth } from '@/app/context/AuthContext';
 
 export default function Header() {
-  const { isAuthenticated, logout } = useAuth()
-  const pathname = usePathname() // Detecta la ruta actual
+  const { isAuthenticated, logout } = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const navLinks = [
-    { name: 'Inicio', path: '/' },
-    { name: 'Tienda', path: '/store' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Vídeos', path: '/video' },
-    { name: 'Locales', path: '/location' },
-    { name: 'Contacto', path: '/contact' },
-    { name: 'Perfil', path: '/profile' },
-  ]
+  const handleNav = (path: string) => {
+    router.push(path);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <header className="bg-black bg-opacity-80 shadow-md sticky top-0 z-50 border-b border-gray-700">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-gray-300 hover:text-gray-100 transition">
+        <button onClick={() => handleNav('/')} className="text-2xl font-bold text-gray-300 hover:text-white transition duration-200">
           Tenis de Mesa 🏓
-        </Link>
+        </button>
 
         <nav className="hidden md:flex gap-6 text-gray-300 font-medium">
           {!isAuthenticated ? (
             <>
-              <Link href="/login" className="px-4 py-2 hover:text-gray-100 transition">Login</Link>
-              <Link href="/register" className="px-4 py-2 hover:text-gray-100 transition">Registro</Link>
+              <button onClick={() => handleNav('/login')} className="px-4 py-2 hover:text-white transition duration-200">Login</button>
+              <button onClick={() => handleNav('/register')} className="px-4 py-2 hover:text-white transition duration-200">Registro</button>
             </>
           ) : (
             <>
-              {navLinks.map(link => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className={`px-5 py-2 transition ${
-                    pathname === link.path ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-gray-100'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <button
-                onClick={logout}
-                className="px-4 py-2 text-gray-300 hover:text-red-500 transition"
-              >
-                Cerrar sesión
-              </button>
+              <button onClick={() => handleNav('/store')} className={`px-5 py-2 transition duration-200 ${pathname === '/store' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Tienda</button>
+              <button onClick={() => handleNav('/blog')} className={`px-5 py-2 transition duration-200 ${pathname === '/blog' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Blog</button>
+              <button onClick={() => handleNav('/video')} className={`px-5 py-2 transition duration-200 ${pathname === '/video' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Vídeos</button>
+              <button onClick={() => handleNav('/location')} className={`px-5 py-2 transition duration-200 ${pathname === '/location' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Locales</button>
+              <button onClick={() => handleNav('/contact')} className={`px-5 py-2 transition duration-200 ${pathname === '/contact' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Contacto</button>
+              <button onClick={() => handleNav('/profile')} className={`px-5 py-2 transition duration-200 ${pathname === '/profile' ? 'text-white font-bold border-b-2 border-gray-500' : 'hover:text-white'}`}>Perfil</button>
+              <button onClick={handleLogout} className="px-4 py-2 text-gray-300 hover:text-red-500 transition duration-200">Cerrar sesión</button>
             </>
           )}
         </nav>
       </div>
     </header>
-  )
+  );
 }
