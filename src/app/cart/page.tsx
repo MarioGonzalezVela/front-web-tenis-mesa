@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 type Product = {
   id: number
@@ -21,6 +22,7 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [cartId, setCartId] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     fetch('http://localhost:8000/api/carts')
@@ -98,13 +100,13 @@ export default function CartPage() {
               
               <div className="flex space-x-2 mt-4">
                 <button
-                  className="bg-gradient-to-r from-green-500 to-green-700 text-white px-3 py-2 rounded-lg hover:from-green-400 hover:to-green-600 transition"
+                  className="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600"
                   onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
                 >
                   ➕
                 </button>
                 <button
-                  className="bg-gradient-to-r from-yellow-500 to-yellow-700 text-white px-3 py-2 rounded-lg hover:from-yellow-400 hover:to-yellow-600 transition"
+                  className="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600"
                   onClick={() =>
                     item.quantity > 1
                       ? updateQuantity(item.product_id, item.quantity - 1)
@@ -114,16 +116,25 @@ export default function CartPage() {
                   ➖
                 </button>
                 <button
-                  className="bg-gradient-to-r from-red-600 to-red-800 text-white px-3 py-2 rounded-lg hover:from-red-500 hover:to-red-700 transition"
+                  className="bg-red-700 text-white px-3 py-2 rounded-lg hover:bg-red-800"
                   onClick={() => removeItem(item.product_id)}
                 >
-                  ❌
+                  Quitar
                 </button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <div className="text-center mt-6">
+        <button
+          className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-2xl text-lg font-semibold border border-gray-600 transition"
+          onClick={() => router.push('/store')}
+        >
+          Volver a la tienda
+        </button>
+      </div>
     </div>
   )
 }
