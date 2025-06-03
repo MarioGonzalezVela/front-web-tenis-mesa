@@ -99,11 +99,11 @@ export default function LocationPage() {
 
   return (
     <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
-      <h1 className="text-3xl font-bold text-center text-gray-200 mb-6">Locales en Comunidad de Madrid</h1>
+      <h1 className="text-3xl font-bold text-center text-gray-200 mb-6">Locales en la Comunidad de Madrid</h1>
 
       <div className="text-center mb-4">
         <button
-          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
+          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 my-3 rounded-2xl transition"
           onClick={() => setShowOnlyVisited(!showOnlyVisited)}
         >
           {showOnlyVisited ? "Mostrar todos los locales" : "Mostrar locales visitados"}
@@ -116,7 +116,7 @@ export default function LocationPage() {
           .map(location => (
             <div key={location.id} className="border border-gray-700 rounded-2xl p-4 shadow-lg hover:shadow-xl bg-gray-900 transition duration-200">
               <h2 className="text-xl font-semibold text-gray-200">{location.name}</h2>
-              <p className="text-gray-400">📍 {location.address}</p>
+              <p className="text-gray-400 pt-3">📍 {location.address}</p>
               <p className="text-gray-400">📞 {location.phone}</p>
               <p className="text-gray-400">🕒 {location.schedule}</p>
 
