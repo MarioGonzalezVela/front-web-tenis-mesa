@@ -42,9 +42,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 rounded-lg">
-      <div className="w-full max-w-md p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl">
-        <h1 className="text-3xl font-bold mb-7 text-center text-gray-200">¡Regístrate!</h1>
+    <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 px-4 sm:px-0">
+      <div className="w-full max-w-screen-sm sm:max-w-md p-4 sm:p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-200">¡Regístrate!</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -52,7 +52,7 @@ export default function RegisterPage() {
             placeholder="Nombre"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
+            className="w-full p-2 text-sm sm:text-base border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <input
             type="email"
@@ -60,7 +60,7 @@ export default function RegisterPage() {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
+            className="w-full p-2 text-sm sm:text-base border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <input
             type="password"
@@ -68,17 +68,17 @@ export default function RegisterPage() {
             placeholder="Contraseña"
             value={form.password}
             onChange={handleChange}
-            className="w-full p-2 mb-6 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
+            className="w-full p-2 text-sm sm:text-base border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
           />
           <button
             type="submit"
-            className="w-full bg-gray-800 text-white py-2 rounded-xl hover:bg-gray-700 transition"
+            className="w-full bg-gray-800 text-white py-3 text-lg sm:text-xl rounded-xl hover:bg-gray-700 transition"
           >
             Registrarse
           </button>
         </form>
         {message && (
-          <p className="mt-4 text-center text-green-500">{message}</p>
+          <p className="mt-4 text-center text-green-500 text-sm sm:text-base">{message}</p>
         )}
       </div>
     </div>

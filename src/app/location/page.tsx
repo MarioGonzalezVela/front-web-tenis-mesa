@@ -21,7 +21,7 @@ export default function LocationPage() {
   const [locations, setLocations] = useState<Location[]>([]);
   const [visitedLocations, setVisitedLocations] = useState<number[]>([]);
   const [reviews, setReviews] = useState<{ [key: number]: string }>({});
-  const { token } = useAuth(); // Obtiene el token autenticado
+  const { token } = useAuth();
   const [showOnlyVisited, setShowOnlyVisited] = useState(false);
 
   useEffect(() => {
@@ -47,103 +47,28 @@ export default function LocationPage() {
     }
   }, [token]);
 
-  const markAsVisited = (locationId: number) => {
-    if (!token) {
-      alert("Debes iniciar sesión para marcar locales como visitados.");
-      return;
-    }
-
-    fetch("http://localhost:8000/api/visited-locations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ location_id: locationId }),
-    })
-      .then(() => setVisitedLocations([...visitedLocations, locationId]))
-      .catch((error) => console.error("Error marcando como visitado:", error));
-  };
-
-  const submitReview = async (locationId: number) => {
-    if (!token) {
-      alert("Debes iniciar sesión para añadir una reseña.");
-      return;
-    }
-
-    if (!reviews[locationId]) {
-      alert("Error: La reseña no puede estar vacía.");
-      return;
-    }
-
-    try {
-      const response = await fetch(`http://localhost:8000/api/visited-locations`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ location_id: locationId, review: reviews[locationId] }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al guardar la reseña.");
-      }
-
-      alert("Reseña guardada correctamente.");
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-      alert("No se pudo guardar la reseña. Verifica que la API está funcionando.");
-    }
-  };
-
   return (
-    <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
-      <h1 className="text-3xl font-bold text-center text-gray-200 mb-6">Locales en la Comunidad de Madrid</h1>
+    <div className="max-w-screen-lg mx-auto bg-black bg-opacity-90 p-4 sm:p-6 rounded-2xl shadow-xl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-200 mb-6">Locales en Madrid</h1>
 
-      <div className="text-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
         <button
-          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 my-3 rounded-2xl transition"
+          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition w-full sm:w-auto"
           onClick={() => setShowOnlyVisited(!showOnlyVisited)}
         >
-          {showOnlyVisited ? "Mostrar todos los locales" : "Mostrar locales visitados"}
+          {showOnlyVisited ? "Mostrar todos los locales" : "Mostrar visitados"}
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 m-8">
         {locations
           .filter(location => !showOnlyVisited || visitedLocations.includes(location.id))
           .map(location => (
-            <div key={location.id} className="border border-gray-700 rounded-2xl p-4 shadow-lg hover:shadow-xl bg-gray-900 transition duration-200">
-              <h2 className="text-xl font-semibold text-gray-200">{location.name}</h2>
-              <p className="text-gray-400 pt-3">📍 {location.address}</p>
-              <p className="text-gray-400">📞 {location.phone}</p>
-              <p className="text-gray-400">🕒 {location.schedule}</p>
-
-              {!visitedLocations.includes(location.id) ? (
-                <button
-                  className="mt-4 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
-                  onClick={() => markAsVisited(location.id)}
-                >
-                  ✅ Marcar como visitado
-                </button>
-              ) : (
-                <div className="mt-4">
-                  <p className="text-green-400">✔️ Visitado</p>
-                  <textarea
-                    placeholder="Añadir reseña..."
-                    value={reviews[location.id] || ''}
-                    onChange={(e) => setReviews({ ...reviews, [location.id]: e.target.value })}
-                    className="w-full p-2 mt-2 border border-gray-700 rounded-xl bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
-                  />
-                  <button
-                    className="mt-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
-                    onClick={() => submitReview(location.id)}
-                  >
-                    💬 Guardar reseña
-                  </button>
-                </div>
-              )}
+            <div key={location.id} className="border border-gray-700 rounded-2xl p-4 m-3 bg-gray-900 shadow-lg hover:shadow-xl transition">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-200 m-4">{location.name}</h2>
+              <p className="text-gray-400 text-sm sm:text-base mt-2">📍 {location.address}</p>
+              <p className="text-gray-400 text-sm sm:text-base mt-2">📞 {location.phone}</p>
+              <p className="text-gray-400 text-sm sm:text-base mt-2">🕒 {location.schedule}</p>
             </div>
           ))}
       </div>

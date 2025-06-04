@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="min-h-screen flex flex-col bg-black bg-opacity-90 text-gray-200 transition-opacity duration-500 backdrop-blur-md">
         <AuthProvider>
-          <Header />
+          <Header /> 
           <main className="flex-grow p-6 bg-gray-900 rounded-sm shadow-xl">
             {children}
           </main>
