@@ -25,24 +25,29 @@ export default function ProductPage() {
     if (!productId) return;
 
     fetch(`http://localhost:8000/api/products/${productId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Producto no encontrado');
+        return res.json();
+      })
       .then(data => setProduct(data))
       .catch(error => console.error('Error obteniendo producto:', error));
 
-    fetch('http://localhost:8000/api/carts')
+    fetch(`http://localhost:8000/api/carts`)
       .then(res => res.json())
       .then(data => {
-        if (data.length > 0) {
+        if (data.length > 0 && data[0].id) {
           setCartId(data[0].id);
           updateCartState(data[0].id);
         } else {
-          alert('No hay carritos disponibles');
+          console.error('No hay carritos disponibles.');
         }
       })
       .catch(error => console.error('Error obteniendo carritos:', error));
   }, [productId]);
 
   const updateCartState = (cartId: number) => {
+    if (!cartId) return;
+
     fetch(`http://localhost:8000/api/carts/${cartId}`)
       .then(res => res.json())
       .then(cartData => {
@@ -109,7 +114,7 @@ export default function ProductPage() {
         <img 
           src={product.image} 
           alt={product.name} 
-          className="w-full sm:w-1/2 h-auto aspect-square object-cover rounded-xl shadow-lg"
+          className="w-full sm:max-w-xs h-auto aspect-auto object-contain rounded-xl shadow-lg"
         />
 
         <div className="text-gray-300 text-left">
@@ -125,7 +130,7 @@ export default function ProductPage() {
               className="mt-3 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-2xl transition w-full sm:w-auto"
               onClick={() => addToCart(product.id)}
             >
-              🛒 Añadir al carrito
+              Añadir al carrito
             </button>
           )}
         </div>
