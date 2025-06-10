@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 type Product = {
@@ -13,7 +13,15 @@ type Product = {
   category: string;
 };
 
-export default function ProductPage() {
+export default function ProductPageWrapper() {
+  return (
+    <Suspense fallback={<p className="text-center mt-20 text-gray-400">Cargando producto...</p>}>
+      <ProductPage />
+    </Suspense>
+  );
+}
+
+function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [cartId, setCartId] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<{ productId: number; quantity: number }[]>([]);
@@ -24,12 +32,12 @@ export default function ProductPage() {
   useEffect(() => {
     if (!productId) return;
 
-    fetch(`http://localhost:8000/api/products/${productId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`)
       .then(res => res.json())
       .then(data => setProduct(data))
       .catch(error => console.error('Error obteniendo producto:', error));
 
-    fetch('http://localhost:8000/api/carts')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carts`)
       .then(res => res.json())
       .then(data => {
         if (data.length > 0) {
@@ -43,7 +51,7 @@ export default function ProductPage() {
   }, [productId]);
 
   const updateCartState = (cartId: number) => {
-    fetch(`http://localhost:8000/api/carts/${cartId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carts/${cartId}`)
       .then(res => res.json())
       .then(cartData => {
         if (!cartData.cart_items || !Array.isArray(cartData.cart_items)) {
@@ -72,7 +80,7 @@ export default function ProductPage() {
       return;
     }
 
-    fetch(`http://localhost:8000/api/carts/${cartId}/add`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carts/${cartId}/add`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id: productId, quantity: 1 }),
