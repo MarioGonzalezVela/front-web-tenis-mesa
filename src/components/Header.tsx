@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header className="shadow-md sticky top-0 z-50 border-b bg-black text-white border-gray-700">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <button onClick={() => handleNav('/')} className="text-2xl font-bold hover:text-gray-500 transition">
+        <button onClick={() => handleNav('/')} className="text-2xl font-bold hover:text-blue-300 transition">
           Ping Pong World 🏓
         </button>
 
@@ -39,17 +39,17 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 font-medium">
           {!isAuthenticated ? (
             <>
-              <button onClick={() => handleNav('/login')} className="px-4 py-2 hover:text-gray-500 transition">Login</button>
-              <button onClick={() => handleNav('/register')} className="px-4 py-2 hover:text-gray-500 transition">Registro</button>
+              <button onClick={() => handleNav('/login')} className="px-4 py-2 hover:text-blue-500 transition">Login</button>
+              <button onClick={() => handleNav('/register')} className="px-4 py-2 hover:text-blue-500 transition">Registro</button>
             </>
           ) : (
             <>
-              <button onClick={() => handleNav('/store')} className={`px-5 py-2 ${pathname === '/store' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Tienda</button>
-              <button onClick={() => handleNav('/history')} className={`px-5 py-2 ${pathname === '/history' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Historia</button>
-              <button onClick={() => handleNav('/video')} className={`px-5 py-2 ${pathname === '/video' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Vídeos</button>
-              <button onClick={() => handleNav('/location')} className={`px-5 py-2 ${pathname === '/location' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Locales</button>
-              <button onClick={() => handleNav('/contact')} className={`px-5 py-2 ${pathname === '/contact' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Contacto</button>
-              <button onClick={() => handleNav('/profile')} className={`px-5 py-2 ${pathname === '/profile' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-gray-500'}`}>Perfil</button>
+              <button onClick={() => handleNav('/store')} className={`px-5 py-2 ${pathname === '/store' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Tienda</button>
+              <button onClick={() => handleNav('/history')} className={`px-5 py-2 ${pathname === '/history' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Historia</button>
+              <button onClick={() => handleNav('/video')} className={`px-5 py-2 ${pathname === '/video' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Vídeos</button>
+              <button onClick={() => handleNav('/location')} className={`px-5 py-2 ${pathname === '/location' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Locales</button>
+              <button onClick={() => handleNav('/contact')} className={`px-5 py-2 ${pathname === '/contact' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Contacto</button>
+              <button onClick={() => handleNav('/profile')} className={`px-5 py-2 ${pathname === '/profile' ? 'font-bold border-b-2 border-gray-500' : 'hover:text-blue-500'}`}>Perfil</button>
               <button onClick={handleLogout} className="px-4 py-2 hover:text-red-500 transition">Cerrar sesión</button>
             </>
           )}

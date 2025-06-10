@@ -66,11 +66,11 @@ export default function FavoriteVideosPage() {
                 title={fav.video.title}
                 allowFullScreen
               ></iframe>
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-200 mt-4">{fav.video.title}</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-200 mt-4 mb-4">{fav.video.title}</h2>
               <p className="text-gray-400 text-sm sm:text-base">{fav.video.description}</p>
 
               <button
-                className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-2xl transition w-full sm:w-auto"
+                className="mt-4 bg-red-600 hover:bg-red-400 text-white px-4 py-2 rounded-2xl transition w-full sm:w-auto"
                 onClick={() => removeFromFavorites(fav.id)}
               >
                 ❌ Eliminar de favoritos
