@@ -4,7 +4,7 @@ export default function HistoryPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-black bg-opacity-90 py-10 px-4 sm:py-16">
       <div className="w-full max-w-screen-md sm:max-w-screen-lg p-4 sm:p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl text-left">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-gray-200 text-center">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 text-gray-200 text-center">
           Aprende sobre el Tenis de Mesa 🏓
         </h1>
 
@@ -35,6 +35,8 @@ export default function HistoryPage() {
           <ul className="list-disc pl-4 sm:pl-6 space-y-2 text-sm sm:text-base">
             <li><strong>Palas:</strong> Disponibles con diferentes tipos de gomas según la velocidad y efecto.</li>
             <li><strong>Mesa:</strong> Dimensiones oficiales de 2.74m x 1.525m con altura de 76cm.</li>
+            <li><strong>Pelotas:</strong> Hechas de plástico, con un diámetro de 40mm y peso de 2.7g.</li>
+            <li><strong>Red:</strong> Debe tener una altura de 15.25cm y estar tensada adecuadamente.</li>
           </ul>
         </section>
       </div>

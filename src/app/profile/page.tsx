@@ -68,7 +68,7 @@ export default function ProfilePage() {
     <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 px-4 sm:px-0">
       <div className="w-full max-w-screen-sm sm:max-w-md p-4 sm:p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl text-center text-gray-300">
         <div className="border-b-2 border-gray-700 pb-4 mb-4">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-4">Perfil de Usuario</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4">Tu perfil</h1>
           <p className="text-sm sm:text-base mb-2">
             <span className="font-bold">Nombre:</span> {user.name}
           </p>
@@ -92,17 +92,17 @@ export default function ProfilePage() {
             onClick={() => router.push('/cart')}
             className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl mt-4 transition w-full sm:w-auto"
           >
-            🛒 Ir al carrito
+            Ver carrito
           </button>
         </div>
 
         <div className="mt-6 text-left">
-          <h2 className="text-lg sm:text-xl font-semibold mb-2">🎥 Vídeos Favoritos</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-2">⭐ Vídeos Favoritos</h2>
           <button
             onClick={() => router.push('/favoriteVideos')}
             className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl mt-4 transition w-full sm:w-auto"
           >
-            📺 Ver Vídeos Favoritos
+            Ver vídeos favoritos
           </button>
         </div>
       </div>

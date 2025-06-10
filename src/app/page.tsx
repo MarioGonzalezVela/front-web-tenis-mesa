@@ -20,7 +20,7 @@ export default function Home() {
         />
 
         <p className="mt-6 text-gray-400 text-md sm:text-lg">
-          Explora la mejor tienda de tenis de mesa, descubre vídeos de entrenamiento y forma parte de nuestra comunidad.
+          ¡Explora la tienda de tenis de mesa más moderna y completa, regístrate, adquiere productos, descubre vídeos de entrenamiento y consulta locales por toda la Comunidad de Madrid!
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
