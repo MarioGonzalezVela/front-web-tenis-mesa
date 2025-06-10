@@ -15,8 +15,6 @@ export default function StorePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [cartId, setCartId] = useState<number | null>(null);
-  const [cartItems, setCartItems] = useState<{ productId: number; quantity: number }[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,6 +26,14 @@ export default function StorePage() {
       })
       .catch(error => console.error('Error obteniendo productos:', error));
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setFilteredProducts(products.filter(product => product.category === selectedCategory));
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [selectedCategory, products]);
 
   return (
     <div className="max-w-screen-lg mx-auto bg-black bg-opacity-90 p-4 sm:p-6 rounded-2xl shadow-xl">
@@ -57,7 +63,7 @@ export default function StorePage() {
         {filteredProducts.map(product => (
           <div key={product.id} className="border border-gray-700 rounded-2xl p-4 m-4 bg-gray-900 shadow-lg hover:shadow-xl transition">
             <img 
-              src={product.image} 
+              src={product.image.startsWith('/') ? product.image : `/images/${product.image}`} 
               alt={product.name} 
               className="w-full h-auto aspect-square object-cover rounded-xl mb-4" 
             />
