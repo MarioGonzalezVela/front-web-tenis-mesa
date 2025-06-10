@@ -37,8 +37,12 @@ export default function LoginPage() {
       login(data.access_token);
       setMessage('¡Login exitoso! Redirigiendo...');
       router.push('/store');
-    } catch (err: any) {
-      setMessage(err.message);
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    setMessage(err.message);
+  } else {
+    setMessage('Error desconocido.');
+    }
     }
   };
 
