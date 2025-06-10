@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 type Product = {
   id: number;
@@ -17,12 +17,11 @@ export default function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [cartId, setCartId] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<{ productId: number; quantity: number }[]>([]);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const productId = searchParams.get('id');
+  const params = useParams();
+  const productId = params.id ? Number(params.id) : null;
 
   useEffect(() => {
-    if (!productId) return;
+    if (!productId || isNaN(productId)) return;
 
     fetch(`http://localhost:8000/api/products/${productId}`)
       .then(res => {
@@ -52,7 +51,6 @@ export default function ProductPage() {
       .then(res => res.json())
       .then(cartData => {
         if (!cartData.cart_items || !Array.isArray(cartData.cart_items)) {
-          console.error("Formato incorrecto de datos del carrito:", cartData);
           return;
         }
 
@@ -96,14 +94,14 @@ export default function ProductPage() {
     <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
       <div className="flex justify-between items-center mb-6">
         <button
-          onClick={() => router.push('/store')}
+          onClick={() => window.location.href = '/store'}
           className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
         >
           ⬅ Volver a la tienda
         </button>
 
         <button
-          onClick={() => router.push('/cart')}
+          onClick={() => window.location.href = '/cart'}
           className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
         >
           🛒 Ir al carrito

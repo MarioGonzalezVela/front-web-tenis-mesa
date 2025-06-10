@@ -118,7 +118,7 @@ export default function StorePage() {
           <div 
             key={product.id} 
             className="border border-gray-700 rounded-2xl p-4 shadow-lg hover:shadow-xl bg-gray-900 transition duration-200 cursor-pointer"
-            onClick={() => router.push(`/productInfo?id=${product.id}`)}
+            onClick={() => router.push(`/productInfo/${product.id}`)}
           >
             <div className="flex justify-center items-center w-full h-40 mb-5">
               <img src={product.image} alt={product.name} className="max-w-full max-h-full aspect-auto object-contain rounded-xl" />
