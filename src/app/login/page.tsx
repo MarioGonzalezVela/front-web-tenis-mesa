@@ -45,7 +45,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 px-4 sm:px-0">
       <div className="w-full max-w-screen-sm sm:max-w-md p-4 sm:p-6 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-200">Inicia Sesión 🔑</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-200">Inicia Sesión</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"

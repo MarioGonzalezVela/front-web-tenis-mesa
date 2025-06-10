@@ -26,8 +26,8 @@ export default function HistoryPage() {
           {/* Técnicas de juego */}
           <h2 className="text-lg sm:text-xl font-semibold text-gray-300">Técnicas y estrategias</h2>
           <ul className="list-disc pl-4 sm:pl-6 space-y-2 text-sm sm:text-base">
-            <li><strong>Juego ofensivo:</strong> Golpes rápidos y agresivos como el "topspin".</li>
-            <li><strong>Juego defensivo:</strong> Bloquear ataques rivales con golpes como el "chop" o el "push".</li>
+            <li><strong>Juego ofensivo:</strong> Golpes rápidos y agresivos como el &quot;topspin&quot;.</li>
+            <li><strong>Juego defensivo:</strong> Bloquear ataques rivales con golpes como el &quot;chop&quot; o el &quot;push&quot;.</li>
           </ul>
 
           {/* Equipamiento */}
