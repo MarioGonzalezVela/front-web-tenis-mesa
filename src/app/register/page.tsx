@@ -37,12 +37,13 @@ export default function RegisterPage() {
       setMessage('Registrado con éxito!');
       setForm({ name: '', email: '', password: '' });
     } catch (err: unknown) {
-  if (err instanceof Error) {
-    setMessage(err.message);
-  } else {
-    setMessage('Error desconocido.');
-  }
-}
+      if (err instanceof Error) {
+        setMessage(err.message);
+      } else {
+        setMessage('Error desconocido.');
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90 px-4 sm:px-0">
@@ -87,5 +88,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-}
-
