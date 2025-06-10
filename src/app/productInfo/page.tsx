@@ -1,32 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type Product = {
   id: number;
   name: string;
   image: string;
   price: number;
+  stock: number;
+  description: string;
   category: string;
 };
 
-export default function StorePage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+export default function ProductPage() {
+  const [product, setProduct] = useState<Product | null>(null);
   const [cartId, setCartId] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<{ productId: number; quantity: number }[]>([]);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const productId = searchParams.get('id');
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/products')
+    if (!productId) return;
+
+    fetch(`http://localhost:8000/api/products/${productId}`)
       .then(res => res.json())
-      .then(data => {
-        setProducts(data);
-        setFilteredProducts(data);
-      })
-      .catch(error => console.error('Error obteniendo productos:', error));
+      .then(data => setProduct(data))
+      .catch(error => console.error('Error obteniendo producto:', error));
 
     fetch('http://localhost:8000/api/carts')
       .then(res => res.json())
@@ -39,7 +40,7 @@ export default function StorePage() {
         }
       })
       .catch(error => console.error('Error obteniendo carritos:', error));
-  }, []);
+  }, [productId]);
 
   const updateCartState = (cartId: number) => {
     fetch(`http://localhost:8000/api/carts/${cartId}`)
@@ -84,26 +85,17 @@ export default function StorePage() {
       .catch(error => console.error('Error añadiendo producto al carrito:', error));
   };
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setFilteredProducts(category ? products.filter(product => product.category === category) : products);
-  };
+  if (!product) return <p className="text-center mt-20 text-gray-400">Cargando producto...</p>;
 
   return (
     <div className="max-w-7xl mx-auto bg-black bg-opacity-90 p-6 rounded-2xl shadow-xl">
       <div className="flex justify-between items-center mb-6">
-        <select
-          value={selectedCategory}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          className="border p-2 rounded-xl bg-gray-800 text-gray-300 hover:bg-gray-700 transition"
+        <button
+          onClick={() => router.push('/store')}
+          className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-2xl transition"
         >
-          <option value="">Todo</option>
-          <option value="ropa">Ropa</option>
-          <option value="mesas">Mesas</option>
-          <option value="palas">Palas</option>
-          <option value="gomas">Gomas</option>
-          <option value="extras">Extras</option>
-        </select>
+          ⬅ Volver a la tienda
+        </button>
 
         <button
           onClick={() => router.push('/cart')}
@@ -113,35 +105,31 @@ export default function StorePage() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredProducts.map(product => (
-          <div 
-            key={product.id} 
-            className="border border-gray-700 rounded-2xl p-4 shadow-lg hover:shadow-xl bg-gray-900 transition duration-200 cursor-pointer"
-            onClick={() => router.push(`/productInfo?id=${product.id}`)}
-          >
-            <div className="flex justify-center items-center w-full h-40 mb-5">
-              <img src={product.image} alt={product.name} className="max-w-full max-h-full aspect-auto object-contain rounded-xl" />
-            </div>
-            <h2 className="text-xl font-semibold text-gray-200">{product.name}</h2>
-            <p className="text-gray-400">Precio: {product.price}€</p>
-            
-            {cartItems.some(item => item.productId === product.id) ? (
-              <p className="mt-2 text-green-500 font-semibold text-left">Añadido</p>
-            ) : (
-              <button
-                className="mt-3 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-2xl transition"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(product.id);
-                }}
-              >
-                Añadir al carrito
-              </button>
-            )}
-          </div>
-        ))}
+      <div className="flex flex-col sm:flex-row items-center gap-6">
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="w-full sm:w-1/2 h-auto aspect-square object-cover rounded-xl shadow-lg"
+        />
+
+        <div className="text-gray-300 text-left">
+          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+          <p className="text-lg text-gray-400 mb-4">{product.description}</p>
+          <p className="text-xl font-semibold text-gray-200 mb-4">{product.price}€</p>
+          <p className="text-sm text-gray-400 mb-4">Stock disponible: {product.stock}</p>
+
+          {cartItems.some(item => item.productId === product.id) ? (
+            <p className="mt-3 text-green-500 font-semibold">Añadido</p>
+          ) : (
+            <button
+              className="mt-3 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-2xl transition w-full sm:w-auto"
+              onClick={() => addToCart(product.id)}
+            >
+              🛒 Añadir al carrito
+            </button>
+          )}
+        </div>
       </div>
-    </div> 
+    </div>
   );
 }
