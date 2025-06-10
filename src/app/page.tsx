@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div 
       className="min-h-screen w-full flex flex-col items-center justify-between bg-cover bg-center bg-no-repeat py-10 px-4"
-      style={{ backgroundImage: "url('/backgroundImage.jpg')" }}
+      style={{ backgroundImage: "url('/BackgroundImage.jpg')" }}
     >
       <div className="max-w-screen-md w-full text-center p-6 rounded-xl">
         <h1 className="text-3xl bg-black rounded-2xl p-6 sm:text-4xl font-bold mb-6 text-white border border-gray-500">¡Bienvenido a la web de tenis de mesa!</h1>
